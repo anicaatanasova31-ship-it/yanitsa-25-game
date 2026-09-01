@@ -1,0 +1,653 @@
+ <!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>25 • Колко добре познаваш Яница?</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#fff;
+  color:#111;
+  font-family:'Montserrat',sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow-x:hidden;
+}
+
+body:before,
+body:after{
+  content:"";
+  position:fixed;
+  width:120px;
+  height:120px;
+  border:1px solid #111;
+  border-radius:50%;
+  opacity:.12;
+  pointer-events:none;
+}
+
+body:before{
+  top:-55px;
+  left:-55px;
+}
+
+body:after{
+  bottom:-55px;
+  right:-55px;
+}
+
+.container{
+  width:100%;
+  max-width:560px;
+  padding:25px;
+  text-align:center;
+}
+
+.card{
+  border:1px solid #111;
+  padding:35px 25px;
+  position:relative;
+  background:white;
+  box-shadow:0 12px 40px rgba(0,0,0,.08);
+}
+
+.ribbon{
+  position:absolute;
+  width:55px;
+  height:55px;
+  border:2px solid #111;
+  transform:rotate(45deg);
+  background:white;
+}
+
+.ribbon.left{
+  left:-28px;
+  top:25px;
+}
+
+.ribbon.right{
+  right:-28px;
+  top:25px;
+}
+
+.ribbon:before,
+.ribbon:after{
+  content:"";
+  position:absolute;
+  background:white;
+  border:2px solid #111;
+  width:30px;
+  height:30px;
+}
+
+.ribbon:before{
+  left:-17px;
+  top:18px;
+}
+
+.ribbon:after{
+  right:-17px;
+  bottom:-17px;
+}
+
+.small{
+  font-size:12px;
+  letter-spacing:4px;
+  margin-bottom:12px;
+}
+
+.number{
+  font-family:'Cormorant Garamond',serif;
+  font-size:90px;
+  line-height:.8;
+  font-weight:600;
+  margin:10px 0;
+}
+
+.title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:34px;
+  line-height:1;
+  margin:20px 0;
+}
+
+.subtitle{
+  font-size:13px;
+  line-height:1.7;
+  color:#555;
+}
+
+.glasses{
+  font-size:28px;
+  margin:25px 0;
+  letter-spacing:10px;
+}
+
+button{
+  width:100%;
+  border:1px solid #111;
+  background:#111;
+  color:#fff;
+  padding:16px;
+  margin-top:12px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:600;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:.25s;
+}
+
+button:hover{
+  background:#fff;
+  color:#111;
+}
+
+.answer{
+  background:#fff;
+  color:#111;
+  border:1px solid #111;
+  text-align:left;
+  font-weight:500;
+  margin:10px 0;
+}
+
+.answer:hover{
+  background:#f4f4f4;
+}
+
+.question-number{
+  font-size:11px;
+  letter-spacing:3px;
+  margin-bottom:20px;
+  color:#777;
+}
+
+.question{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;
+  line-height:1.15;
+  margin-bottom:25px;
+}
+
+.feedback{
+  margin:22px 0 10px;
+  padding:18px;
+  border:1px solid #111;
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;
+}
+
+.hidden{
+  display:none;
+}
+
+.score{
+  font-family:'Cormorant Garamond',serif;
+  font-size:85px;
+  font-weight:600;
+  margin:10px 0;
+}
+
+.result-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:34px;
+  margin:15px 0;
+}
+
+.fade{
+  animation:fade .6s ease;
+}
+
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(15px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.confetti{
+  position:fixed;
+  top:-20px;
+  font-size:22px;
+  animation:fall 3s linear forwards;
+  pointer-events:none;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+    opacity:0;
+  }
+}
+
+.footer{
+  margin-top:22px;
+  font-size:10px;
+  letter-spacing:2px;
+  color:#888;
+}
+
+.loading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div id="start" class="card fade">
+
+    <div class="ribbon left"></div>
+    <div class="ribbon right"></div>
+
+    <div class="small">15 • 09 • 2001</div>
+
+    <div class="number">25</div>
+
+    <div class="title">
+      КОЛКО ДОБРЕ<br>
+      ПОЗНАВАШ ЯНИЦА?
+    </div>
+
+    <div class="glasses">🥂 🥂</div>
+
+    <div class="subtitle">
+      2 въпроса.<br>
+      1 Яница.<br>
+      Да видим колко добре я познаваш. 🤍
+    </div>
+
+    <button onclick="startGame()">
+      ЗАПОЧВАМЕ
+    </button>
+
+    <div class="footer">ЯНИЦА • 25</div>
+
+  </div>
+
+
+  <div id="loading" class="card hidden">
+    <div class="loading">
+      Приготвям въпросите... 🥂
+    </div>
+  </div>
+
+
+  <div id="game" class="card hidden">
+
+    <div class="question-number" id="questionNumber">
+      ВЪПРОС 1 / 2
+    </div>
+
+    <div class="question" id="questionText"></div>
+
+    <div id="answers"></div>
+
+    <div id="feedback" class="feedback hidden"></div>
+
+    <button id="nextButton"
+            class="hidden"
+            onclick="nextQuestion()">
+      ПРОДЪЛЖАВАМЕ →
+    </button>
+
+  </div>
+
+
+  <div id="result" class="card hidden">
+
+    <div class="small">ТВОЯТ РЕЗУЛТАТ</div>
+
+    <div class="score" id="scoreText">
+      0 / 2
+    </div>
+
+    <div class="glasses">🥂</div>
+
+    <div class="result-title" id="resultTitle"></div>
+
+    <div class="subtitle" id="resultText"></div>
+
+    <button onclick="location.reload()">
+      ОЩЕ ВЕДНЪЖ
+    </button>
+
+    <div class="footer">
+      С ОБИЧ, ЯНИЦА 🤍
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   ВАЖНО:
+   След като направим Google Apps Script,
+   тук ще поставим неговия URL.
+   ===================================================== */
+
+const API_URL = "ПОСТАВИ_TUK_URL_ОТ_GOOGLE_APPS_SCRIPT";
+
+
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
+
+
+/* =====================================================
+   СТАРТ
+   ===================================================== */
+
+function startGame(){
+
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("loading").classList.remove("hidden");
+
+  getQuestions();
+}
+
+
+/* =====================================================
+   ВЗЕМАМЕ 2 НЕПОВТОРЕНИ ВЪПРОСА
+   ===================================================== */
+
+function getQuestions(){
+
+  const callbackName =
+    "callback_" + Date.now();
+
+  window[callbackName] = function(data){
+
+    delete window[callbackName];
+
+    const script =
+      document.getElementById(callbackName);
+
+    if(script) script.remove();
+
+    if(data.error){
+
+      alert(data.error);
+
+      location.reload();
+
+      return;
+    }
+
+    questions = data.questions;
+
+    document
+      .getElementById("loading")
+      .classList.add("hidden");
+
+    document
+      .getElementById("game")
+      .classList.remove("hidden");
+
+    showQuestion();
+
+  };
+
+
+  const script =
+    document.createElement("script");
+
+  script.id = callbackName;
+
+  script.src =
+    API_URL +
+    "?action=assign&callback=" +
+    callbackName;
+
+  document.body.appendChild(script);
+}
+
+
+/* =====================================================
+   ПОКАЗВАМЕ ВЪПРОС
+   ===================================================== */
+
+function showQuestion(){
+
+  const q = questions[currentQuestion];
+
+  document.getElementById("questionNumber")
+    .innerText =
+    "ВЪПРОС " +
+    (currentQuestion + 1) +
+    " / 2";
+
+  document.getElementById("questionText")
+    .innerText = q.question;
+
+  const answers =
+    document.getElementById("answers");
+
+  answers.innerHTML = "";
+
+  q.answers.forEach(function(answer, index){
+
+    const button =
+      document.createElement("button");
+
+    button.className = "answer";
+
+    button.innerText = answer;
+
+    button.onclick =
+      function(){
+
+        checkAnswer(index);
+
+      };
+
+    answers.appendChild(button);
+
+  });
+
+  document
+    .getElementById("feedback")
+    .classList.add("hidden");
+
+  document
+    .getElementById("nextButton")
+    .classList.add("hidden");
+}
+
+
+/* =====================================================
+   ПРОВЕРКА
+   ===================================================== */
+
+function checkAnswer(selected){
+
+  const q = questions[currentQuestion];
+
+  const buttons =
+    document.querySelectorAll(".answer");
+
+  buttons.forEach(function(button){
+
+    button.disabled = true;
+
+  });
+
+
+  const feedback =
+    document.getElementById("feedback");
+
+  feedback.classList.remove("hidden");
+
+
+  if(selected === q.correct){
+
+    score++;
+
+    feedback.innerHTML =
+      "ПОЗНА! 🤍<br><small>Яница одобрява.</small>";
+
+  }else{
+
+    feedback.innerHTML =
+      "ОПА! ГРЕШКА! 😂<br>" +
+      "<small>Отпий си и продължаваме. 🥂</small>";
+
+  }
+
+
+  document
+    .getElementById("nextButton")
+    .classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   СЛЕДВАЩ ВЪПРОС
+   ===================================================== */
+
+function nextQuestion(){
+
+  currentQuestion++;
+
+  if(currentQuestion >= questions.length){
+
+    showResult();
+
+    return;
+
+  }
+
+  showQuestion();
+
+}
+
+
+/* =====================================================
+   РЕЗУЛТАТ
+   ===================================================== */
+
+function showResult(){
+
+  document
+    .getElementById("game")
+    .classList.add("hidden");
+
+  document
+    .getElementById("result")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("scoreText")
+    .innerText =
+    score + " / 2";
+
+
+  let title = "";
+  let text = "";
+
+
+  if(score === 2){
+
+    title =
+      "Този човек май те познава прекалено добре!";
+
+    text =
+      "Яница е впечатлена. 🤍";
+
+    makeConfetti();
+
+  }else if(score === 1){
+
+    title =
+      "Добре е, но можеше и по-добре…";
+
+    text =
+      "Имаш още какво да научиш за Яница. 😂";
+
+  }else{
+
+    title =
+      "СЯДАЙ ДА ПИЕШ! 🥂";
+
+    text =
+      "Явно трябва да се запознаете отново! 😂";
+
+  }
+
+
+  document.getElementById("resultTitle")
+    .innerText = title;
+
+  document.getElementById("resultText")
+    .innerText = text;
+
+}
+
+
+/* =====================================================
+   КОНФЕТИ
+   ===================================================== */
+
+function makeConfetti(){
+
+  const symbols =
+    ["♡","✦","✧","🥂","25"];
+
+  for(let i=0;i<35;i++){
+
+    const item =
+      document.createElement("div");
+
+    item.className = "confetti";
+
+    item.innerText =
+      symbols[
+        Math.floor(
+          Math.random() * symbols.length
+        )
+      ];
+
+    item.style.left =
+      Math.random()*100 + "vw";
+
+    item.style.animationDelay =
+      Math.random()*1.5 + "s";
+
+    document.body.appendChild(item);
+
+    setTimeout(function(){
+
+      item.remove();
+
+    },4500);
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
